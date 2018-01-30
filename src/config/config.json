@@ -1,0 +1,15 @@
+{
+    "Database": {
+        "Type": "MySQL",
+        "MySQL": {
+            "Username": "taylor",
+            "Password": "tallarin3",
+            "Name": "kafeidb",
+            "Hostname": "127.0.0.1",
+            "Port": 3306,
+            "Parameter": "?charset=utf8&parseTime=True&loc=Local"
+        }
+    },
+    "KeyJWT": "lzncie3kdjg",
+    "Static": "static"
+}
