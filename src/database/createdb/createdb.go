@@ -5,7 +5,7 @@ import (
 
 	"github.com/taylorwebk/kafei-api/src/config"
 	"github.com/taylorwebk/kafei-api/src/database"
-	"github.com/taylorwebk/kafei-api/src/model"
+	"github.com/taylorwebk/kafei-api/src/structs"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 	database.Connect(conf.Database)
 	database.SQL.SingularTable(true)
 	DB := database.SQL
-	DB.CreateTable(&model.User{}, &model.Entry{}, &model.Activity{}, &model.Interv{})
+	DB.CreateTable(&structs.User{}, &structs.Entry{}, &structs.Activity{}, &structs.Interv{})
 }
 
 var conf = &configuration{}
