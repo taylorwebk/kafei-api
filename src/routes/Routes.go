@@ -13,6 +13,10 @@ func RunAndServe() {
 	pr := mux.NewRouter().PathPrefix("/kafeiapi/user").Subrouter().StrictSlash(false)
 	pr.HandleFunc("/entry", actions.NewEntry).Methods("POST")
 	pr.HandleFunc("/entries", actions.AllEntries).Methods("GET")
+	pr.HandleFunc("/activity", actions.NewActivity).Methods("POST")
+	pr.HandleFunc("/activity", actions.EndActivity).Methods("PUT")
+	pr.HandleFunc("/activities", actions.AllActivities).Methods("GET")
+	pr.HandleFunc("/interval", actions.AddInterval).Methods("POST")
 
 	r.HandleFunc("/kafeiapi/register", actions.RegisterUser).Methods("POST")
 	r.HandleFunc("/kafeiapi/login", actions.Login).Methods("POST")

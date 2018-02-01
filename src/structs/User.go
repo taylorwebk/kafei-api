@@ -22,11 +22,41 @@ type UserToken struct {
 	Username string
 }
 
+// LoadActivities load activities with intervals
+func (u *User) LoadActivities() {
+	var activities []Activity
+	database.SQL.Where("user_id = ?", u.ID).Find(&activities)
+	for _, activity := range activities {
+		activity.LoadIntervals()
+	}
+	u.Activitys = activities
+}
+
 // LoadEntries Load entries for user u
 func (u *User) LoadEntries() {
 	var entries []Entry
 	database.SQL.Where("user_id = ?", u.ID).Find(&entries)
 	u.Entrys = entries
+}
+
+// AddActivity ads an activity
+func (u *User) AddActivity(item Activity) {
+	u.Activitys = append(u.Activitys, item)
+}
+
+// WithActivities Returns a basic json for User struct
+func (u *User) WithActivities() interface{} {
+	return &struct {
+		Name       string     `json:"name"`
+		Email      string     `json:"email"`
+		Username   string     `json:"username"`
+		Activities []Activity `json:"activities"`
+	}{
+		Name:       u.Name,
+		Email:      u.Email,
+		Username:   u.Username,
+		Activities: u.Activitys,
+	}
 }
 
 // AddEntry ads an Entry

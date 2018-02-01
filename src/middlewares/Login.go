@@ -1,12 +1,10 @@
 package middlewares
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/taylorwebk/kafei-api/src/structs"
-
-	"context"
-
 	"github.com/taylorwebk/kafei-api/src/utils"
 )
 

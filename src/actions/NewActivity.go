@@ -9,34 +9,34 @@ import (
 	"github.com/taylorwebk/kafei-api/src/utils"
 )
 
-// NewEntry register a new entry to database
-func NewEntry(w http.ResponseWriter, r *http.Request) {
-	var err error
+// NewActivity register a new activity for the user
+func NewActivity(w http.ResponseWriter, r *http.Request) {
 	db := database.SQL
+	var err error
+	activity := structs.Activity{}
 	user := structs.User{}
-	entry := structs.Entry{}
-	err = json.NewDecoder(r.Body).Decode(&entry)
+	err = json.NewDecoder(r.Body).Decode(&activity)
 	if err != nil {
 		utils.JSONResponse(
 			http.StatusUnprocessableEntity,
 			structs.Response{
-				Message: "Error en los datos recibidos",
+				Message: err.Error(),
 			},
 			w,
 		)
 		return
 	}
 	usertoken := r.Context().Value("user").(structs.UserToken)
-	db.Where("username = ?", usertoken.Username).First(&user)
-	user.AddEntry(entry)
+	db.Where("id = ?", usertoken.ID).First(&user)
+	user.AddActivity(activity)
 	db.Save(&user)
-	user.LoadEntries()
+	user.LoadActivities()
 	tokenstr := utils.GenerateToken(user.ID, user.Username, w)
 	response := structs.Response{
-		Message: "Nuevo ingreso agregado.",
+		Message: "Nueva actividad guardada.",
 		Content: structs.Token{
 			Token: tokenstr,
-			Data:  user.Entrys,
+			Data:  user.Activitys,
 		},
 	}
 	utils.JSONResponse(http.StatusOK, response, w)
