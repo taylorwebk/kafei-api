@@ -18,6 +18,8 @@ func RunAndServe() {
 	pr.HandleFunc("/activities", actions.AllActivities).Methods("GET")
 	pr.HandleFunc("/interval", actions.AddInterval).Methods("POST")
 
+	r.HandleFunc("/", actions.Hello).Methods("GET")
+	r.HandleFunc("/kafeiapi", actions.Hello).Methods("GET")
 	r.HandleFunc("/kafeiapi/register", actions.RegisterUser).Methods("POST")
 	r.HandleFunc("/kafeiapi/login", actions.Login).Methods("POST")
 	r.PathPrefix("/kafeiapi/user").Handler(negroni.New(

@@ -2,5 +2,5 @@ runtime: go
 api_version: go1
 
 handlers:
-- url: /.*
+- url: /kafei/.*
 script: _go_app
