@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"log"
+	"os"
 
 	//_ "github.com/go-sql-driver/mysql" // MySQL driver
 	"github.com/jinzhu/gorm"
@@ -13,7 +14,10 @@ var (
 	// SQL wrapper
 	SQL *gorm.DB
 	// Database info
-	databases Info
+	databases      Info
+	connectionName = mustGetenv("CLOUDSQL_CONNECTION_NAME")
+	user           = mustGetenv("CLOUDSQL_USER")
+	password       = os.Getenv("CLOUDSQL_PASSWORD")
 )
 
 // Type is the type of database from a Type* constant
@@ -42,18 +46,28 @@ type MySQLInfo struct {
 	Parameter string
 }
 
+func mustGetenv(k string) string {
+	v := os.Getenv(k)
+	if v == "" {
+		log.Panicf("%s environment variable not set.", k)
+	}
+	return v
+}
+
 // DSN returns the Data Source Name
 func DSN(ci MySQLInfo) string {
+	constr := fmt.Sprintf("%s:%s@unix(/cloudsql/%s)/kafeidb%s", user, password, connectionName, ci.Parameter)
+	return constr
 	// Example: root:@tcp(localhost:3306)/test
-	return ci.Username +
-		":" +
-		ci.Password +
-		"@tcp(" +
-		ci.Hostname +
-		":" +
-		fmt.Sprintf("%d", ci.Port) +
-		")/" +
-		ci.Name + ci.Parameter
+	/* return ci.Username +
+	":" +
+	ci.Password +
+	"@tcp(" +
+	ci.Hostname +
+	":" +
+	fmt.Sprintf("%d", ci.Port) +
+	")/" +
+	ci.Name + ci.Parameter */
 }
 
 // Connect to the database
