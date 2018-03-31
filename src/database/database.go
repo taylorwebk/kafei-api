@@ -14,7 +14,8 @@ var (
 	// SQL wrapper
 	SQL *gorm.DB
 	// Database info
-	databases      Info
+	databases Info
+	//SERVER: Descomentar 19,20,21
 	connectionName = mustGetenv("CLOUDSQL_CONNECTION_NAME")
 	user           = mustGetenv("CLOUDSQL_USER")
 	password       = os.Getenv("CLOUDSQL_PASSWORD")
@@ -46,6 +47,7 @@ type MySQLInfo struct {
 	Parameter string
 }
 
+// Server Descomentar50-56
 func mustGetenv(k string) string {
 	v := os.Getenv(k)
 	if v == "" {
@@ -55,6 +57,7 @@ func mustGetenv(k string) string {
 }
 
 // DSN returns the Data Source Name
+// SERVER: Descomentar 60,61 y comentar 63-71. LOCAL: !SERVER
 func DSN(ci MySQLInfo) string {
 	constr := fmt.Sprintf("%s:%s@unix(/cloudsql/%s)/kafeidb%s", user, password, connectionName, ci.Parameter)
 	return constr

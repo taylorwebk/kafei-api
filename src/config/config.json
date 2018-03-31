@@ -7,7 +7,7 @@
             "Name": "kafeidb",
             "Hostname": "127.0.0.1",
             "Port": 3306,
-            "Parameter": "?charset=utf8&parseTime=True&loc=Local"
+            "Parameter": "?charset=utf8&parseTime=True&loc=America%2FLa_Paz"
         }
     },
     "KeyJWT": "lzncie3kdjg",

@@ -25,6 +25,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Username: userCredentials.Username,
 	}).First(&user)
 	if user.ID == 0 {
+		db.Where(&structs.User{
+			Email: userCredentials.Username,
+		}).First(&user)
+	}
+	if user.ID == 0 {
 		userOrPasswordInvalid(w)
 		return
 	}
@@ -34,7 +39,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	response := structs.Response{
-		Message: "Login Correcto",
+		Message: "Es grato tenerte de vuelta.",
 		Content: structs.Token{
 			Token: utils.GenerateToken(user.ID, user.Username, w),
 			Data:  user.NewStruct(),
@@ -46,7 +51,7 @@ func userOrPasswordInvalid(w http.ResponseWriter) {
 	utils.JSONResponse(
 		http.StatusUnauthorized,
 		structs.Response{
-			Message: "Nombre de Usuario o Contraseña inválidos.",
+			Message: "Datos de ingreso no válidos.",
 		},
 		w,
 	)

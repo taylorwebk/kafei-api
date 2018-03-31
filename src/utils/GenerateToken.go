@@ -14,7 +14,7 @@ func GenerateToken(id uint, username string, w http.ResponseWriter) string {
 		id,
 		username,
 		jwt.StandardClaims{
-			ExpiresAt: time.Now().Unix() + 100*5*100,
+			IssuedAt: time.Now().Unix(),
 		},
 	}
 	tokenInstance := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

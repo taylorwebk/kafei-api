@@ -35,7 +35,7 @@ func (u *User) LoadActivities() {
 // LoadEntries Load entries for user u
 func (u *User) LoadEntries() {
 	var entries []Entry
-	database.SQL.Where("user_id = ?", u.ID).Find(&entries)
+	database.SQL.Where("user_id = ?", u.ID).Order("id desc").Find(&entries)
 	u.Entrys = entries
 }
 

@@ -34,7 +34,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	if len(query) > 0 {
 		res := structs.Response{
 			Message: fmt.Sprintf(
-				"El username: %s o email: %s ya esta(n) siendo usado(s)",
+				"Ups, el username: %s o email: %s ya esta siendo usado.",
 				user.Username,
 				user.Email,
 			),
@@ -46,7 +46,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		user.Password = string(hashedPassword)
 		db.Create(&user)
 		res := structs.Response{
-			Message: "Usuario registrado correctamente",
+			Message: "Todo listo para ser más efectivo y comenzar a ahorrar.",
 			Content: structs.Token{
 				Token: utils.GenerateToken(user.ID, user.Username, w),
 				Data:  user.NewStruct(),

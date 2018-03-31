@@ -27,7 +27,6 @@ func RunAndServe() {
 		negroni.Wrap(pr),
 	))
 	n := negroni.Classic()
-	//n.Use(negroni.HandlerFunc(middlewares.Login))
 	n.UseHandler(r)
 	n.Run(":8080")
 }
