@@ -30,13 +30,15 @@ func NewEntry(w http.ResponseWriter, r *http.Request) {
 	db.Where("username = ?", usertoken.Username).First(&user)
 	user.AddEntry(entry)
 	db.Save(&user)
-	user.LoadEntries()
-	tokenstr := utils.GenerateToken(user.ID, user.Username, w)
+	entries, saving := GetEntries(usertoken.ID)
 	response := structs.Response{
-		Message: "Nuevo ingreso agregado.",
-		Content: structs.Token{
-			Token: tokenstr,
-			Data:  user.Entrys,
+		Message: "Nuevo Ingreso Guardado.",
+		Content: &struct {
+			Entries []structs.EntryResponse `json:"entries"`
+			Saving  float64                 `json:"saving"`
+		}{
+			Entries: entries,
+			Saving:  saving,
 		},
 	}
 	utils.JSONResponse(http.StatusOK, response, w)

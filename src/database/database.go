@@ -57,7 +57,7 @@ func mustGetenv(k string) string {
 }
 
 // DSN returns the Data Source Name
-// SERVER: Descomentar 60,61 y comentar 63-71. LOCAL: !SERVER
+// SERVER: Descomentar 62,63 y comentar 65-73. LOCAL: !SERVER
 func DSN(ci MySQLInfo) string {
 	constr := fmt.Sprintf("%s:%s@unix(/cloudsql/%s)/kafeidb%s", user, password, connectionName, ci.Parameter)
 	return constr
