@@ -14,6 +14,16 @@ type Activity struct {
 	Intervs []Interv `json:"intervals"`
 }
 
+// ActivityResponse response structure for activity
+type ActivityResponse struct {
+	ID      uint    `json:"id"`
+	Literal string  `json:"literal"`
+	Date    string  `json:"date"`
+	Time    string  `json:"time"`
+	Hours   float64 `json:"hours"`
+	Mins    float64 `json:"minutes"`
+}
+
 // LoadIntervals loads intervals
 func (a *Activity) LoadIntervals() {
 	db := database.SQL

@@ -30,13 +30,13 @@ func NewActivity(w http.ResponseWriter, r *http.Request) {
 	db.Where("id = ?", usertoken.ID).First(&user)
 	user.AddActivity(activity)
 	db.Save(&user)
-	user.LoadActivities()
+	res := getActivities(user.ID)
 	tokenstr := utils.GenerateToken(user.ID, user.Username, w)
 	response := structs.Response{
 		Message: "Nueva actividad guardada.",
 		Content: structs.Token{
 			Token: tokenstr,
-			Data:  user.Activitys,
+			Data:  res,
 		},
 	}
 	utils.JSONResponse(http.StatusOK, response, w)
